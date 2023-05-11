@@ -15,24 +15,25 @@ def take_screenshot():
 
 def gamma_correction(screenshot):
     gamma_increased = np.power(screenshot, 10)
+    cv2.imshow('input', screenshot)
+    cv2.imshow('gamma 2', gamma_increased)
+    cv2.waitKey(10000)
+    cv2.destroyAllWindows()
     # trying to find if there are non black pixels in the gamma boosted image
-    if np.sum(gamma_increased >= 100) != 0:
-        # print(f"found {np.sum(gamma_increased > 0)}")
+    if (np.sum(gamma_increased >= 100) != 0) & (np.sum(screenshot >= 100) == 0):
+        print(f"found {np.sum(gamma_increased > 0)}")
         # by taking note of the time when the starting frame is found, it can be used to find the total time when subtracted from the time of the last frame
         return time.time()
     else:
-        # print("not found")
+        print("not found")
         return -1
-    # cv2.imshow('input', screenshot)
-    # cv2.imshow('gamma 2', gamma_increased)
-    # cv2.waitKey(10000)
-    # cv2.destroyAllWindows()
 
 def main():
     screenshot = take_screenshot()
     start_time = gamma_correction(screenshot)
-    while start_time > 0:
-        pass
+    # while start_time > 0:
+        # start trying to find the last frame of the run
+        # pass
 
 if __name__ == '__main__':
     main()
